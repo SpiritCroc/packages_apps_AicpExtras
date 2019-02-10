@@ -46,15 +46,22 @@ import com.android.internal.utils.ActionConstants;
 
 public class HwKeys extends ActionFragment implements Preference.OnPreferenceChangeListener {
     // category keys
-    private static final String CATEGORY_HWKEY = "hardware_keys";
     private static final String CATEGORY_BACK = "back_key";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_MENU = "menu_key";
     private static final String CATEGORY_ASSIST = "assist_key";
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
+    private static final String CATEGORY_CAMERA = "camera_key";
+    private static final String CATEGORY_VOLUME = "volume_keys";
+    private static final String CATEGORY_POWER = "power_key";
+    private static final String HWKEY_DISABLE = "hardware_keys_disable";
     private static final String KEY_BUTTON_MANUAL_BRIGHTNESS_NEW = "button_manual_brightness_new";
     private static final String KEY_BUTTON_TIMEOUT = "button_timeout";
     private static final String KEY_BUTON_BACKLIGHT_OPTIONS = "button_backlight_options_category";
+    private static final String KEY_TORCH_LONG_PRESS_POWER_GESTURE =
+            "torch_long_press_power_gesture";
+    private static final String KEY_TORCH_LONG_PRESS_POWER_TIMEOUT =
+            "torch_long_press_power_timeout";
 
     // Masks for checking presence of hardware keys.
     // Must match values in frameworks/base/core/res/res/values/config.xml
@@ -146,6 +153,10 @@ public class HwKeys extends ActionFragment implements Preference.OnPreferenceCha
         if (!enableBacklightOptions) {
             mButtonBackLightCategory.getParent().removePreference(mButtonBackLightCategory);
         }
+
+        // bits for hardware keys present on device
+        final int deviceKeys = getResources().getInteger(
+                com.android.internal.R.integer.config_deviceHardwareKeys);
 
         // read bits for present hardware keys
         final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
